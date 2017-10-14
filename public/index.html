@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- Arquivo css padrão processado e minificado -->
+    <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+    <!--
+        O arquivo libs.min.js contém todos os arquivos de bibliotecas externas compactados e minificados em um unico arquivo .js por questões de performance.
+        O mais importante dos arquivo é o System.js, responsável por fazer o carregamento dos módulos ES6, o qual já vem por padrão dentro da pasta dev/lib.
+        Adicione todos seus arquivos de bibliotecas, plugins, etc, dentro da pasta dev/lib para então poder usalós aqui, faça suas chamadas abaixo do script que executa o System.js para evitar possíveis erros de execução.
+    -->
+    <script src="js/libs.min.js"></script>
+    <script>
+        System.defaultJSExtensions = true;
+        System.import('js/index.js').catch( err => console.log(err) );
+    </script>
+</body>
+</html>

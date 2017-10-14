@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"outDir": "public/js",
+		"noEmitOnError": true,
+		"noImplicitAny": true,
+		"removeComments": true,
+		"module": "system",
+		"experimentalDecorators": true,
+		"rootDir": "dev/ts"
+	},
+	"include": [
+		"dev/ts/**/*"
+	]
+}
