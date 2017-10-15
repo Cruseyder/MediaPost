@@ -1,6 +1,8 @@
 import {Contact} from '../models/Contact';
 import {ContactView} from '../views/ContactView';
 import ModalView from '../views/ModalView';
+import {EditModalFragments} from '../views/EditModalFragments';
+import {ViewModalFragments} from '../views/ViewModalFragments';
 
 export default class ContactController {
 
@@ -19,6 +21,8 @@ export default class ContactController {
 
         // Adiciona o evento que fecha o Modal
         this._body.addEventListener('click', (event) => this.close(event) );
+
+        this._body.addEventListener('click', (event) => this.view(event) );
     }
 
     /**
@@ -35,7 +39,17 @@ export default class ContactController {
 
         if( target && target.matches( '[data-action="edit"]' ) ) {
             targetID = parseInt( target.dataset.id );
-            this._contactModel.getById(targetID).then( contact => this._modelView.update( contact ));
+            this._contactModel.getById(targetID).then( contact => this._modelView.update( contact, new EditModalFragments() ));
+        }
+    }
+
+    view(event: Event) {
+        let target = <HTMLElement>event.target;
+        let targetID: number;
+
+        if( target && target.matches( '[data-action="view"]' ) ) {
+            targetID = parseInt( target.dataset.id );
+            this._contactModel.getById(targetID).then( contact => this._modelView.update( contact, new ViewModalFragments() ) );
         }
     }
 
