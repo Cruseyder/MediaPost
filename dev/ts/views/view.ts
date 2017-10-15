@@ -1,3 +1,4 @@
+import ModalFragments from '../interfaces/ModalFragments';
 /**
  * Class Abstrato View
  * 
@@ -24,8 +25,8 @@ export default abstract class View<T> {
      * 
      * @param model Um modelo de dados que será usado pela view para gerar o HTML
      */
-    update(model: T) : void {
-        this._element.innerHTML = this._render(model);
+    update(model: T, fragments?: ModalFragments<T>) : void {
+        this._element.innerHTML = this._render(model, fragments);
     }
 
     /**
@@ -33,5 +34,5 @@ export default abstract class View<T> {
      * s
      * @param model Um modelo de dados que será usado pela view para gerar o html
      */
-    abstract _render(model: T): string;
+    abstract _render(model: T, fragments?: ModalFragments<T>): string;
 }
