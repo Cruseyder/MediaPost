@@ -9,13 +9,64 @@ import {Contact} from '../models/Contact';
  */
 export class ContactDao implements Dao<Contact> {
 
-    insert(obj: Contact) {}
+    insert(obj: Contact): Promise<Contact> {
+        var fd = new FormData();
+        
+        fd.append( 'token', Token.getToken());
+        fd.append( 'name', obj.name);
+        fd.append( 'email', obj.email);
+        fd.append( 'phone', obj.phone);
 
-    update(obj: Contact) {}
+        return new Promise( (resolve, reject) => {
+            new Request<ApiResponse<Object>>()
+                .request(`salvar`, {
+                    method: 'POST',
+                    body: fd
+                })
+                .then( res => console.log(res.data) )
+                .catch( err => {
+                    console.log( err );
+                    reject( 'Não foi possivel atualizar as informações de contato no momento.' );
+                })
+        });
+    }
 
-    delete(id: number) {}
+    update(obj: Contact): Promise<Contact> {
+        var fd = new FormData();
 
-    getById(id: number) {
+        fd.append( 'token', Token.getToken() );
+        fd.append( 'id', obj.id.toString() );
+        fd.append( 'name', obj.name );
+        fd.append( 'email', obj.email );
+        fd.append( 'phone', obj.phone );
+
+        return new Promise( (resolve, reject) => {
+            new Request<ApiResponse<Object>>()
+                .request(`salvar`, {
+                    method: 'POST',
+                    body: fd
+                })
+                .then( res => console.log(res.data) )
+                .catch( err => {
+                    console.log( err );
+                    reject( 'Não foi possivel atualizar as informações de contato no momento.' );
+                })
+        });
+    }
+
+    delete(id: number) : Promise<string> {
+        return new Promise( (resolve, reject) => {
+            new Request<ApiResponse<Object>>()
+                .request(`excluir?id=${id}&token=${Token.getToken()}`, { method: 'DELETE' })
+                .then( res => resolve( 'Contato deletado com sucesso.' ) )
+                .catch( err => {
+                    console.log(err);
+                    reject( 'Não foi possivel excluir o usuário solicitado.')
+                });
+        })
+    }
+
+    getById(id: number): Promise<Contact> {
         return new Promise( (resolve, reject) => {
             new Request<ApiResponse<Object>>()
                 .request(`detalhes?id=${id}&token=${Token.getToken()}`)
@@ -28,7 +79,7 @@ export class ContactDao implements Dao<Contact> {
         });
     }
 
-    get() {
+    get() : Promise<Contact[]> {
         return new Promise( (resolve, reject) => {
             new Request<ApiResponse<Object[]>>()
                 .request(`listar?token=${Token.getToken()}`)
