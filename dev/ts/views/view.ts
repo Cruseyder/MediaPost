@@ -7,7 +7,7 @@
 export default abstract class View<T> {
 
     // Elemento DOM
-    private _element: Element;
+    protected _element: Element;
 
     /**
      * Recebe um selector css, o cal é usado para selecionar o elemento onde será renderizo o html
