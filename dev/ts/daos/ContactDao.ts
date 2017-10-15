@@ -71,7 +71,7 @@ export class ContactDao implements Dao<Contact> {
             new Request<ApiResponse<Object>>()
                 .request(`detalhes?id=${id}&token=${Token.getToken()}`)
                 .then( res => res.data )
-                .then( (contact: Contact) => resolve( new Contact( contact.name, contact.id ) ) )
+                .then( (contact: Contact) => resolve( new Contact( contact.name, contact.id, contact.email, contact.phone ) ) )
                 .catch( err => {
                     console.log(err);
                     reject('Ocorreu um Erro durante a requisição dos dados, por favor tente novamente em poucos instantes.');
@@ -84,7 +84,9 @@ export class ContactDao implements Dao<Contact> {
             new Request<ApiResponse<Object[]>>()
                 .request(`listar?token=${Token.getToken()}`)
                 .then( res => res.data )
-                .then( (contacts: Contact[]) => resolve( contacts.map( contact => new Contact(contact.name, contact.id ) ) ) )
+                .then( (contacts: Contact[]) => resolve( 
+                    contacts.map( contact => new Contact(contact.name, contact.id, contact.email, contact.phone ) ) 
+                ))
                 .catch( err => {
                     console.log(err);
                     reject('Ocorreu um Erro durante a requisição dos dados, por favor tente novamente em poucos instantes.');
