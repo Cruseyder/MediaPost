@@ -11,4 +11,14 @@ export class Contact {
         readonly phone?: string[]
     ){}
 
+    getById(id: number) {
+        return this._dao
+                .getById(id);
+    }
+
+    get(){
+        return this._dao
+                .get();
+    }
+
 }
