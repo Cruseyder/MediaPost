@@ -4,6 +4,7 @@ import ModalView from '../views/ModalView';
 import {EditModalFragments} from '../views/EditModalFragments';
 import {ViewModalFragments} from '../views/ViewModalFragments';
 import {DeleteModalFragments} from '../views/DeleteModalFragments';
+import {InsertModalFragments} from '../views/InsertModalFragments';
 import {MessageView} from '../views/MessageView';
 
 export default class ContactController {
@@ -28,6 +29,8 @@ export default class ContactController {
         this._body.addEventListener('click', (event) => this.view(event) );
 
         this._body.addEventListener('click', (event) => this.delete(event) );
+
+        this._body.addEventListener('click', (event) => this.insert(event) );
 
         this._body.addEventListener('click', (event) => this.onDelete(event) );
 
@@ -85,6 +88,14 @@ export default class ContactController {
         if( target && target.matches( '[data-action="delete"]' ) ) {
             targetID = parseInt( target.dataset.id );
             this._contactModel.getById(targetID).then( contact => this._modelView.update( contact, new DeleteModalFragments() ) );
+        }
+    }
+
+    insert(event: Event) {
+        let target = <HTMLElement>event.target;
+
+        if( target && target.matches( '[data-action="insert"]' ) ) {
+            this._modelView.update( this._contactModel, new InsertModalFragments() );
         }
     }
 
