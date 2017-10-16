@@ -12,8 +12,8 @@ export class EditModalFragments implements ModalFragments<Contact> {
 
     body(model?: Contact) : string {
         return `
-            <form>
-                <input type="hidden" name="id" value="${model.id}">
+            <form data-form="edit">
+                <input type="hidden" name="id" id="contact-id" value="${model.id}">
                 <div class="form-group">
                     <label for="contact-name">Nome: </label>
                     <input type="text" class="form-control" name="name" id="contact-name" value="${model.name}" >
@@ -32,7 +32,7 @@ export class EditModalFragments implements ModalFragments<Contact> {
 
     footer(model?: Contact) : string {
         return `
-            <button type="button" class="btn btn-primary">Atualizar</button>
+            <button type="button" class="btn btn-primary" data-confirm="edit">Atualizar</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         `;
     }

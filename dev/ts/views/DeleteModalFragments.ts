@@ -19,7 +19,7 @@ export class DeleteModalFragments implements ModalFragments<Contact> {
 
     footer(model?: Contact) : string {
         return `
-            <button type="button" class="btn btn-danger" data-confirm="delete">Deletar</button>
+            <button type="button" class="btn btn-danger" data-confirm="delete" data-id="${model.id}">Deletar</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         `;
     }
