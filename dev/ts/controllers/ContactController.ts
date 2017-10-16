@@ -1,6 +1,7 @@
 import {Contact} from '../models/Contact';
 import {ContactView} from '../views/ContactView';
 import ModalView from '../views/ModalView';
+import PaginationView from '../views/PaginationView';
 import {EditModalFragments} from '../views/EditModalFragments';
 import {ViewModalFragments} from '../views/ViewModalFragments';
 import {DeleteModalFragments} from '../views/DeleteModalFragments';
@@ -14,11 +15,15 @@ export default class ContactController {
     private _contactView        = new ContactView('.root');
     private _modelView          = new ModalView('.modals');
     private _messageView        = new MessageView('.messages');
+    private _paginationView     = new PaginationView('.pag');
     
     constructor(){
         
         // Inicializa a listagem de contatos
-        this._contactModel.get().then( contacts => this._contactView.update( contacts ) );
+        this._contactModel.get(1).then( contacts => this._contactView.update( contacts ) );
+
+        // Inicializa a paginação passando todos os contatos cadastrados
+        this._contactModel.get().then( contacts => this._paginationView.update(contacts) );
 
         // Adiciona o evento de atualização de contato
         this._body.addEventListener('click', (event) => this.edit(event) );
@@ -37,6 +42,8 @@ export default class ContactController {
         this._body.addEventListener('click', (event) => this.onEdit(event) );
 
         this._body.addEventListener('click', (event) => this.onInsert(event) );
+
+        this._body.addEventListener('click', (event) => this.onPaginated(event) );
     }
 
     /**
@@ -119,7 +126,7 @@ export default class ContactController {
             // Fecha o modal
             this._modelView._close();
             // Atualiza a listagem
-            this._contactModel.get().then( contacts => this._contactView.update( contacts ) );
+            this._contactModel.get(1).then( contacts => this._contactView.update( contacts ) );
         }  
     }
 
@@ -135,7 +142,7 @@ export default class ContactController {
             // Fecha o modal
             this._modelView._close();
             // Atualiza a listagem
-            this._contactModel.get().then( contacts => this._contactView.update( contacts ) );
+            this._contactModel.get(1).then( contacts => this._contactView.update( contacts ) );
         }
     }
 
@@ -158,7 +165,21 @@ export default class ContactController {
             // Fecha o modal
             this._modelView._close();
             // Atualiza a listagem
-            this._contactModel.get().then( contacts => this._contactView.update( contacts ) );
+            this._contactModel.get(1).then( contacts => this._contactView.update( contacts ) );
+        }
+    }
+
+    onPaginated(event: Event) {
+        event.preventDefault();
+        
+        let target= <HTMLElement>event.target;
+        let page: number;
+    
+        if( target && target.matches( '.page-link' ) ) {
+            page = parseInt(target.textContent);
+            this._contactModel.get(page)
+                .then( contacts => this._contactView.update(contacts) )
+                .catch( err => console.log(err));
         }
     }
 
