@@ -35,6 +35,8 @@ export default class ContactController {
         this._body.addEventListener('click', (event) => this.onDelete(event) );
 
         this._body.addEventListener('click', (event) => this.onEdit(event) );
+
+        this._body.addEventListener('click', (event) => this.onInsert(event) );
     }
 
     /**
@@ -97,6 +99,28 @@ export default class ContactController {
         if( target && target.matches( '[data-action="insert"]' ) ) {
             this._modelView.update( this._contactModel, new InsertModalFragments() );
         }
+    }
+
+    onInsert(event: Event) {
+        let target = <HTMLElement>event.target;
+        let inputName = <HTMLInputElement>document.querySelector('#contact-name');
+        let inputEmail = <HTMLInputElement>document.querySelector('#contact-email');
+        let inputPhone = <HTMLInputElement>document.querySelector('#contact-phone');
+
+        if( target && target.matches( '[data-confirm="insert"]' ) ) {
+            
+            // 
+            this._contactModel
+                .insert(new Contact( inputName.value, null, inputEmail.value, inputPhone.value ) )
+                .then( res => 
+                    this._messageView.update('<div class="alert alert-success" role="alert">Contato adicionado com sucesso.</div>'))
+                .catch( err => 
+                    this._messageView.update(`<div class="alert alert-danger" role="alert">${err}</div>`));
+            // Fecha o modal
+            this._modelView._close();
+            // Atualiza a listagem
+            this._contactModel.get().then( contacts => this._contactView.update( contacts ) );
+        }  
     }
 
     onDelete(event: Event) {
