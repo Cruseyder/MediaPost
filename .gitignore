@@ -3,3 +3,7 @@ node_modules/*
 .sass-cache/*
 .tscache/*
 
+# Ignora arquivos da pasta public, esses arquivos serão gerados durante o processo de build
+public/js/*
+public/css/*
+
