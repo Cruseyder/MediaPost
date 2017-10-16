@@ -1,29 +1,34 @@
-# README #
+# @MediaPost #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Este projeto é referente ao teste para a vaga de desenvolvedor Front-End na empresa @MediaPost
 
-### What is this repository for? ###
+### How to Use ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Baixe ou faça um fork desse projeto.
+* Acesse a pasta do projeto pelo prompt de comando e digite `npm install`
+* Espere terminar a instalação das dependecias do projeto, após concluido basta usar o comando `npm start`
 
-### How do I get set up? ###
+**Atenção**: Para rodar o projeto é preciso ter o Node.js instalado na máquina, você baixa-ló em [Node](https://nodejs.org/en/). 
+**Atenção**: Para o correto funcionamento do plugin *grunt-contrib-sass* é necessário ter o [Sass](http://sass-lang.com/) e o [Ruby](https://rubyinstaller.org/downloads/) instalados.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Técnologias Utilizadas ###
 
-### Contribution guidelines ###
+* HTML5
+* CSS 3
+* Framework CSS [Bootstrap 4](http://getbootstrap.com/)
+* Icon Fonts [Open Iconic](https://useiconic.com/open/)
+* [Grunt](https://gruntjs.com/) - Task Runner
+* JavaScript ES6 + [TypeScript](https://www.typescriptlang.org/)
 
-* Writing tests
-* Code review
-* Other guidelines
+### Estrutura de Pastas ###
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
++ dev: Pasta de desenvolvimento contendo todos os arquivos editavéis
+    * lib: Pasta para adição de bibliotecas/plugin Javascript
+    + scss: Pasta contendo os arquivos Sass do projeto
+        * main.scss: Arquivo Sass principal responsável por importar os demais arquivos
+    + ts: Pasta contendo os arquivos Typescript do projeto
+        * index.ts: Arquivo typescript principal
++ public: Pasta onde serão compilados os arquivos de desenvolvimento para a produção, essa é a pasta que deverá subir para o servidor
+    * css: Pasta contendo o arquivo css minificado e concatenado que será usado pelo arquivo index.html
+    * js: Pasta contendo os arquivos JS processados pelo compilador do TypeScript e uma versão minificada e concatenada de todos os arquivos de bibliotecas/plugins adicionadas a pasta dev/lib
+    * index.html: Arquivo html principal contendo todo o código html chamada para os demais arquivos da pasta public prontos para produção
