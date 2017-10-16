@@ -4,6 +4,7 @@ import ModalView from '../views/ModalView';
 import {EditModalFragments} from '../views/EditModalFragments';
 import {ViewModalFragments} from '../views/ViewModalFragments';
 import {DeleteModalFragments} from '../views/DeleteModalFragments';
+import {MessageView} from '../views/MessageView';
 
 export default class ContactController {
 
@@ -11,6 +12,7 @@ export default class ContactController {
     private _contactModel       = new Contact('');
     private _contactView        = new ContactView('.root');
     private _modelView          = new ModalView('.modals');
+    private _messageView        = new MessageView('.messages');
     
     constructor(){
         
@@ -26,6 +28,10 @@ export default class ContactController {
         this._body.addEventListener('click', (event) => this.view(event) );
 
         this._body.addEventListener('click', (event) => this.delete(event) );
+
+        this._body.addEventListener('click', (event) => this.onDelete(event) );
+
+        this._body.addEventListener('click', (event) => this.onEdit(event) );
     }
 
     /**
@@ -79,6 +85,45 @@ export default class ContactController {
         if( target && target.matches( '[data-action="delete"]' ) ) {
             targetID = parseInt( target.dataset.id );
             this._contactModel.getById(targetID).then( contact => this._modelView.update( contact, new DeleteModalFragments() ) );
+        }
+    }
+
+    onDelete(event: Event) {
+        let target = <HTMLElement>event.target;
+        let targetID: number;
+
+        if( target && target.matches( '[data-confirm="delete"]' ) ) {
+            targetID = parseInt( target.dataset.id );
+            
+            // Deleta o item e apresenta uma mensagem
+            this._contactModel.delete(targetID).then( msg => this._messageView.update(msg) );
+            // Fecha o modal
+            this._modelView._close();
+            // Atualiza a listagem
+            this._contactModel.get().then( contacts => this._contactView.update( contacts ) );
+        }
+    }
+
+    onEdit(event: Event) {
+        let target = <HTMLElement>event.target;
+        let targetID: number;
+        let inputName = <HTMLInputElement>document.querySelector('#contact-name');
+        let inputId   = <HTMLInputElement>document.querySelector('#contact-id' );
+        let inputEmail = <HTMLInputElement>document.querySelector('#contact-email');
+        let inputPhone = <HTMLInputElement>document.querySelector('#contact-phone');
+
+        if( target && target.matches( '[data-confirm="edit"]' ) ) {
+            targetID = parseInt( target.dataset.id );
+            
+            // 
+            this._contactModel.update( 
+                new Contact( inputName.value, parseInt(inputId.value), inputEmail.value, inputPhone.value  ) )
+                .then( res => this._messageView.update(`<div class="alert alert-success" role="alert">Contato atualizado com sucesso.</div>`) )
+                .catch( err => this._messageView.update(`<div class="alert alert-danger" role="alert">${err}</div>`));
+            // Fecha o modal
+            this._modelView._close();
+            // Atualiza a listagem
+            this._contactModel.get().then( contacts => this._contactView.update( contacts ) );
         }
     }
 
