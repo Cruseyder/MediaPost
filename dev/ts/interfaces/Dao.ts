@@ -10,5 +10,5 @@ export interface Dao <T> {
     update(obj: T) : void;
     delete(id: number) : void;
     getById(id: number) : void;
-    get() : void;
+    get(page?: number) : void;
 }

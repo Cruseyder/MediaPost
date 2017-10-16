@@ -31,9 +31,9 @@ export class Contact {
                 .getById(id);
     }
 
-    get(){
+    get(page?: number){
         return this._dao
-                .get();
+                .get(page);
     }
 
 }
