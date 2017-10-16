@@ -31,18 +31,25 @@ export default class ContactController {
         // Adiciona o evento que fecha o Modal
         this._body.addEventListener('click', (event) => this.close(event) );
 
+        // Adiciona o evento que renderiza o modal com as informações do contato
         this._body.addEventListener('click', (event) => this.view(event) );
 
+        // Adiciona o evento que renderiza o modal pedindo a confirmação do usuário para deletar o contato
         this._body.addEventListener('click', (event) => this.delete(event) );
 
+        // Adiciona o evento que renderiza o modal para cadastro de novo contato
         this._body.addEventListener('click', (event) => this.insert(event) );
 
+        // Adiciona o evento que faz a exclusão do contato após confirmação do usuario
         this._body.addEventListener('click', (event) => this.onDelete(event) );
 
+        // Adiciona o eveto que atualiza o contato com as novas informações
         this._body.addEventListener('click', (event) => this.onEdit(event) );
 
+        // Adiciona o evento que cria um novo contato
         this._body.addEventListener('click', (event) => this.onInsert(event) );
 
+        // Adiciona o evento que atualiza a listagem de contato conforme a pagina selecionada
         this._body.addEventListener('click', (event) => this.onPaginated(event) );
     }
 
@@ -100,6 +107,14 @@ export default class ContactController {
         }
     }
 
+    /**
+     * Delegação de evento para o botão de Adicionar
+     * 
+     * Verifica se o elemento clicado foi o botão de Adicionar
+     * Renderiza o modal de Cadastro de novo contato.
+     * 
+     * @param event Evento do Dom
+     */
     insert(event: Event) {
         let target = <HTMLElement>event.target;
 
@@ -108,6 +123,14 @@ export default class ContactController {
         }
     }
 
+    /**
+     * Delegação de evento para o botão de Adicionar
+     * 
+     * Verifica se o elemento clicado foi o botão de Adicionar
+     * Renderiza o modal de Cadastro de novo contato.
+     * 
+     * @param event Evento do Dom
+     */
     onInsert(event: Event) {
         let target = <HTMLElement>event.target;
         let inputName = <HTMLInputElement>document.querySelector('#contact-name');
@@ -116,20 +139,33 @@ export default class ContactController {
 
         if( target && target.matches( '[data-confirm="insert"]' ) ) {
             
-            // 
+            // Adiciona o novo contato
             this._contactModel
                 .insert(new Contact( inputName.value, null, inputEmail.value, inputPhone.value ) )
                 .then( res => 
                     this._messageView.update('<div class="alert alert-success" role="alert">Contato adicionado com sucesso.</div>'))
                 .catch( err => 
                     this._messageView.update(`<div class="alert alert-danger" role="alert">${err}</div>`));
+
             // Fecha o modal
-            this._modelView._close();
+            this._modelView.close();
+
             // Atualiza a listagem
             this._contactModel.get(1).then( contacts => this._contactView.update( contacts ) );
+
+            // Remove a mensagem após X segundos
+            this._messageView.close();
         }  
     }
 
+    /**
+     * Delegação de evento para o botão de Deletar
+     * 
+     * Verifica se o elemento clicado foi o botão de deletar dentro do modal
+     * Deleta o contato selecionado.
+     * 
+     * @param event Evento do Dom
+     */
     onDelete(event: Event) {
         let target = <HTMLElement>event.target;
         let targetID: number;
@@ -140,12 +176,22 @@ export default class ContactController {
             // Deleta o item e apresenta uma mensagem
             this._contactModel.delete(targetID).then( msg => this._messageView.update(msg) );
             // Fecha o modal
-            this._modelView._close();
+            this._modelView.close();
             // Atualiza a listagem
             this._contactModel.get(1).then( contacts => this._contactView.update( contacts ) );
+
+            this._messageView.close();
         }
     }
 
+    /**
+     * Delegação de evento para o botão de Atualizar
+     * 
+     * Verifica se o elemento clicado foi o botão de Atualizar dentro do modal
+     * Atualiza os dados do contato conforme informações preenchidaas pelo usuário.
+     * 
+     * @param event Evento do Dom
+     */
     onEdit(event: Event) {
         let target = <HTMLElement>event.target;
         let targetID: number;
@@ -163,12 +209,22 @@ export default class ContactController {
                 .then( res => this._messageView.update(`<div class="alert alert-success" role="alert">Contato atualizado com sucesso.</div>`) )
                 .catch( err => this._messageView.update(`<div class="alert alert-danger" role="alert">${err}</div>`));
             // Fecha o modal
-            this._modelView._close();
+            this._modelView.close();
             // Atualiza a listagem
             this._contactModel.get(1).then( contacts => this._contactView.update( contacts ) );
+
+            this._messageView.close();
         }
     }
 
+    /**
+     * Delegação de evento para os botões de paginação
+     * 
+     * Verifica se o elemento clicado foi algum botão de paginação
+     * Renderiza a lista de contatos conforme a pagina selecionada.
+     * 
+     * @param event Evento do Dom
+     */
     onPaginated(event: Event) {
         event.preventDefault();
         
@@ -183,11 +239,19 @@ export default class ContactController {
         }
     }
 
+    /**
+     * Delegação de evento para o botão que fecha o modal
+     * 
+     * Verifica se o elemento clicado foi o botão que fecha o modal
+     * Remove o modal página.
+     * 
+     * @param event Evento do Dom
+     */
     close(event: Event){
         let target = <HTMLElement>event.target;
 
         if( target && target.matches( '[data-dismiss="modal"]') || target.matches( '[data-dismiss="modal"] > span') ) {
-            this._modelView._close();
+            this._modelView.close();
         }
     }
 }
