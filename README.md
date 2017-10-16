@@ -8,7 +8,8 @@ Este projeto é referente ao teste para a vaga de desenvolvedor Front-End na emp
 * Acesse a pasta do projeto pelo prompt de comando e digite `npm install`
 * Espere terminar a instalação das dependecias do projeto, após concluido basta usar o comando `npm start`
 
-**Atenção**: Para rodar o projeto é preciso ter o Node.js instalado na máquina, você baixa-ló em [Node](https://nodejs.org/en/). 
+**Atenção**: Para rodar o projeto é preciso ter o Node.js instalado na máquina, você baixa-ló em [Node](https://nodejs.org/en/).
+ 
 **Atenção**: Para o correto funcionamento do plugin *grunt-contrib-sass* é necessário ter o [Sass](http://sass-lang.com/) e o [Ruby](https://rubyinstaller.org/downloads/) instalados.
 
 ### Técnologias Utilizadas ###
