@@ -6,10 +6,12 @@ Este projeto é referente ao teste para a vaga de desenvolvedor Front-End na emp
 
 * Baixe ou faça um fork desse projeto.
 * Acesse a pasta do projeto pelo prompt de comando e digite `npm install`
-* Espere terminar a instalação das dependecias do projeto, após concluido basta usar o comando `npm start`
+* Espere terminar a instalação das dependecias do projeto, após concluido basta usar o comando `npm start` aguarde o projeto compilar e uma janela do navegador irá se abrir automaticamente.
+
+**Atenção**: O projeto traz consigo um servidor que roda por padrão na porta 9000, caso a porta 9000 esteja sendo usada por outro processo, altera a porta no arquivo gruntfile.js, tarefa connect.
 
 **Atenção**: Para rodar o projeto é preciso ter o Node.js instalado na máquina, você baixa-ló em [Node](https://nodejs.org/en/).
- 
+
 **Atenção**: Para o correto funcionamento do plugin *grunt-contrib-sass* é necessário ter o [Sass](http://sass-lang.com/) e o [Ruby](https://rubyinstaller.org/downloads/) instalados.
 
 ### Técnologias Utilizadas ###
