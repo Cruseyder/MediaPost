@@ -23,7 +23,8 @@ export class ContactDao implements Dao<Contact> {
                     method: 'POST',
                     body: fd
                 })
-                .then( res => console.log(res.data) )
+                .then( res => res.data )
+                .then( (contact: Contact) => resolve( new Contact( contact.name, contact.id, contact.email, contact.phone ) ) )
                 .catch( err => {
                     console.log( err );
                     reject( 'Não foi possivel atualizar as informações de contato no momento.' );
@@ -46,7 +47,8 @@ export class ContactDao implements Dao<Contact> {
                     method: 'POST',
                     body: fd
                 })
-                .then( res => console.log(res.data) )
+                .then( res => res.data )
+                .then( (contact: Contact) => resolve( new Contact( contact.name, contact.id, contact.email, contact.phone ) ) )
                 .catch( err => {
                     console.log( err );
                     reject( 'Não foi possivel atualizar as informações de contato no momento.' );
@@ -79,10 +81,10 @@ export class ContactDao implements Dao<Contact> {
         });
     }
 
-    get() : Promise<Contact[]> {
+    get(page?: number) : Promise<Contact[]> {
         return new Promise( (resolve, reject) => {
             new Request<ApiResponse<Object[]>>()
-                .request(`listar?token=${Token.getToken()}`)
+                .request(`listar?token=${Token.getToken()}&page=${page}`)
                 .then( res => res.data )
                 .then( (contacts: Contact[]) => resolve( 
                     contacts.map( contact => new Contact(contact.name, contact.id, contact.email, contact.phone ) ) 
