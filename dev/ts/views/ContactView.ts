@@ -5,13 +5,13 @@ export class ContactView extends View<Contact[]> {
     _render(model: Contact[]) : string {
         return `
         <div class="row">
-            <div class="col-12">
-                <button type="button" class="btn btn-primary btn-sm float-right" data-action="insert">
+            <div class="mb-3">
+                <button type="button" class="btn btn-primary btn-sm" data-action="insert">
                     Adicionar
                 </button>
             </div>
             <table class="table table-hover">
-                <thead class="thead-default">
+                <thead>
                     <tr>
                         <th>ID</th>
                         <th>NOME</th>
@@ -29,13 +29,13 @@ export class ContactView extends View<Contact[]> {
                                     <td>
                                         <ul class="list-inline actions text-right">
                                             <li class="list-inline-item view">
-                                                <button type="button" class="btn btn-primary oi oi-eye" data-action="view" data-id="${contact.id}"></button>
+                                                <button type="button" class="btn btn-primary oi oi-eye" data-action="view" data-id="${contact.id}" data-tooltip="Visualizar"></button>
                                             </li>
                                             <li class="list-inline-item edit">
-                                                <button type="button" class="btn btn-primary oi oi-pencil" data-action="edit" data-id="${contact.id}"></button>
+                                                <button type="button" class="btn btn-primary oi oi-pencil" data-action="edit" data-id="${contact.id}" data-tooltip="Editar"></button>
                                             </li>
                                             <li class="list-inline-item delete">
-                                                <button type="button" class="btn btn-danger oi oi-trash" data-action="delete" data-id="${contact.id}"></button>
+                                                <button type="button" class="btn btn-danger oi oi-trash" data-action="delete" data-id="${contact.id}" data-tooltip="Excluir"></button>
                                             </li>
                                         </ul>
                                     </td>
